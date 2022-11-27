@@ -9,18 +9,42 @@ let flash = require("express-flash");
 let session = require("express-session");
 let mysql = require("mysql");
 let connection = require("./lib/Database");
+let cookieSession = require("cookie-session");
+let bcrypt = require("bcrypt");
+let { body, validationResult } = require("express-validator");
+
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 // Page Input
 var newsRouter = require("./routes/news");
 var aboutRouter = require("./routes/about");
+const { application } = require("express");
 
 var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+//Login
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  maxAge:  3600 * 1000 // 1hr
+}));
+
+// DECLARING CUSTOM MIDDLEWARE
+// const ifNotLoggedin = (req, res, next) => {
+//   if(!req.session.isLoggedIn){
+//       return res.render('login');
+//   }
+//   next();
+// }
+
+// END OF CUSTOM MIDDLEWARE
+
+
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -46,7 +70,7 @@ app.use("/users", usersRouter);
 app.use("/news", newsRouter);
 app.use("/about", aboutRouter);
 app.use("/service", aboutRouter);
-
+app.use("/login", indexRouter);
 
 // import File
 app.use(express.static("img"));

@@ -291,20 +291,22 @@
   background-size: contain;
 }
 
-/* Custom Style */
-.text-md {
-  font-size: 30px;
-}
-
-.text-sm {
-  font-size: 13px;
-}
-.text-sm {
-  font-size: 13px;
-}
-
 @media (min-width: 991.98px) {
-  .bg-footer {
+.bg-footer {
     margin-top: 90px !important;
   }
 }
+
+/* Custom Style by harrie dev*/
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@200&display=swap");
+.custom-font {
+  font-family: "Prompt", sans-serif;
+}
+
+.topbar{
+  display:block;
+  width:200px;
+  height:200px;
+  background-color:#f6fff2;
+  overflow:scroll;
+  }
