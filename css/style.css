@@ -98,7 +98,7 @@
 }
 
 .bg-hero {
-  background: url(carousel-1.jpg) top right no-repeat;
+  background: url(carousel-1.png) top right no-repeat;
   background-size: cover;
 }
 
@@ -112,13 +112,13 @@
 
 .bg-vegetable {
   background: linear-gradient(rgba(52, 173, 84, 0.2), rgba(52, 173, 84, 0.2)),
-    url(../img/vegetable.png) bottom right no-repeat;
+    url(vegetable.png) bottom right no-repeat;
   background-size: contain;
 }
 
 .bg-fruit {
   background: linear-gradient(rgba(255, 153, 51, 0.2), rgba(255, 153, 51, 0.2)),
-    url(../img/fruit.png) bottom right no-repeat;
+    url(fruit.png) bottom right no-repeat;
   background-size: contain;
 }
 
@@ -292,7 +292,7 @@
 }
 
 @media (min-width: 991.98px) {
-.bg-footer {
+  .bg-footer {
     margin-top: 90px !important;
   }
 }
@@ -303,10 +303,10 @@
   font-family: "Prompt", sans-serif;
 }
 
-.topbar{
-  display:block;
-  width:200px;
-  height:200px;
-  background-color:#f6fff2;
-  overflow:scroll;
-  }
+.topbar {
+  display: block;
+  width: 200px;
+  height: 200px;
+  background-color: #f6fff2;
+  overflow: scroll;
+}

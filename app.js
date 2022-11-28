@@ -13,12 +13,15 @@ let cookieSession = require("cookie-session");
 let bcrypt = require("bcrypt");
 let { body, validationResult } = require("express-validator");
 
-
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 // Page Input
 var newsRouter = require("./routes/news");
 var aboutRouter = require("./routes/about");
+var contentRouter = require("./routes/content");
+var organizeRouter = require("./routes/organize");
+var shopRouter = require("./routes/shop");
+var contactRouter = require("./routes/contact");
 const { application } = require("express");
 
 var app = express();
@@ -28,11 +31,13 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 //Login
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  maxAge:  3600 * 1000 // 1hr
-}));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2"],
+    maxAge: 3600 * 1000, // 1hr
+  })
+);
 
 // DECLARING CUSTOM MIDDLEWARE
 // const ifNotLoggedin = (req, res, next) => {
@@ -43,8 +48,6 @@ app.use(cookieSession({
 // }
 
 // END OF CUSTOM MIDDLEWARE
-
-
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -71,6 +74,10 @@ app.use("/news", newsRouter);
 app.use("/about", aboutRouter);
 app.use("/service", aboutRouter);
 app.use("/login", indexRouter);
+app.use("/content", contentRouter);
+app.use("/organize", organizeRouter);
+app.use("/shop", shopRouter);
+app.use("/contact", contactRouter);
 
 // import File
 app.use(express.static("img"));
