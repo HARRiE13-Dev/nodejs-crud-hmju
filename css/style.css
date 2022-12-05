@@ -7,7 +7,8 @@
 }
 
 .btn {
-  font-family: "Roboto", sans-serif;
+  /* font-family: "Roboto", sans-serif; */
+  font-family: "Prompt", sans-serif;
   letter-spacing: 1px;
   font-weight: 700;
   transition: 0.5s;
@@ -309,4 +310,19 @@
   height: 200px;
   background-color: #f6fff2;
   overflow: scroll;
+}
+
+/* Add Calendar Design  */
+.row-striped:nth-of-type(odd) {
+  background-color: #efefef;
+  border-left: 4px #000000 solid;
+}
+
+.row-striped:nth-of-type(even) {
+  background-color: #ffffff;
+  border-left: 4px #efefef solid;
+}
+
+.row-striped {
+  padding: 15px 0;
 }
