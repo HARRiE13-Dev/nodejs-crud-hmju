@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News</title>
+    <title>ADMIN</title>
 
     <link
       rel="stylesheet"
@@ -17,15 +17,15 @@
     <div class="alert alert-danger" role="alert"><%= messages.error %></div>
     <% } %>
 
-    <a href="/news" class="btn btn-info">Back</a>
+    <a href="/news/show" class="btn btn-info">ย้อนกลับ</a>
     <br /><br />
 
     <div class="card">
-      <div class="card-header">Add News</div>
+      <div class="card-header">เพิ่มข้อมูล</div>
       <div class="card-body">
         <form action="/news/add" method="post">
           <div class="form-group">
-            <label>Name:</label>
+            <label>หัวข้อ</label>
             <input
               type="text"
               class="form-control"
@@ -35,7 +35,7 @@
             />
           </div>
           <div class="form-group">
-            <label>Author:</label>
+            <label>รายละเอียด</label>
             <input
               type="text"
               class="form-control"

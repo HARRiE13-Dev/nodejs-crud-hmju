@@ -12,6 +12,9 @@ router.get("/", function (req, res, next) {
   res.render("admin", { title: "Express" });
 });
 
+
+
+
 router.get("/test", function (req, res, next) {
   res.render("admin/news", { title: "Express" });
 });

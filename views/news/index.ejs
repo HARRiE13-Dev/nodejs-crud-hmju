@@ -154,17 +154,25 @@
           <h1 class="display-5">ใหม่ทุกวัน! จากบทความสาระความรู้สู่เกษตรกรยุคใหม่</h1>
         </div>
         <div class="row g-5">
+          <% for(let i = 0; i < data_news.length; i++) { %>
           <div class="col-lg-4">
             <div class="blog-item position-relative overflow-hidden">
               <img class="img-fluid" src="blog-1.jpg" alt="" />
               <a class="blog-overlay" href="">
                 <h4 class="text-white">
-                  สำนักวิจัยฯ มหาวิทยาลัยแม่โจ้ให้การต้อนรับ นักศึกษา คณาจารย์ และเจ้าหน้าที่ของคณะบริหารธุรกิจ มหาวิทยาลัยเชียงใหม่ ในการเข้าศึกษาดูงานเกี่ยวกับกัญชง ตั้งแต่กระบวนการปลูก การเก็บเกี่ยว
+                  <%= data_news[i].Topic %>
                 </h4>
-                <span class="text-white fw-bold">Jan 01, 2050</span>
+                <p class="text-break text-white">
+                  <%= data_news[i].Detail_1 %>
+                </p>
+                <p class="text-break">
+                  <%= data_news[i].Detail_2 %>
+                </p>
+                <span class="text-white fw-bold"><%= data_news[i].Update_time %></span>
               </a>
             </div>
           </div>
+          <% } %>
           <div class="col-lg-4">
             <div class="blog-item position-relative overflow-hidden">
               <img class="img-fluid" src="blog-2.jpg" alt="" />
@@ -324,6 +332,34 @@
 
 
      <!-- JavaScript Libraries -->
+     <script>
+      function dateFormat(inputDate, format) {
+        //parse the input date
+        const date = new Date(inputDate);
+    
+        //extract the parts of the date
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();    
+    
+        //replace the month
+        format = format.replace("MM", month.toString().padStart(2,"0"));        
+    
+        //replace the year
+        if (format.indexOf("yyyy") > -1) {
+            format = format.replace("yyyy", year.toString());
+        } else if (format.indexOf("yy") > -1) {
+            format = format.replace("yy", year.toString().substr(2,2));
+        }
+    
+        //replace the day
+        format = format.replace("dd", day.toString().padStart(2,"0"));
+    
+        return format;
+    }
+    
+    console.log('Converted date: '+ dateFormat('2021-12-10', 'MM-dd-yyyy'));
+     </script>
      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
      <script src="easing/easing.min.js"></script>
