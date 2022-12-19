@@ -53,12 +53,12 @@
       <!-- Heading -->
       <div class="sidebar-heading">ระบบเพิ่ม/ลบ/แก้ไข</div>
 
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/about/show">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>เกี่ยวกับเรา</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="/news/show">
           <i class="fas fa-fw fa-table"></i>
           <span>ข่าวสาร</span></a>
@@ -134,7 +134,7 @@
         <div class="container-fluid pt-4">
 
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">ข่าวสาร</h1>
+            <h1 class="h3 mb-0 text-gray-800">เกี่ยวกับเรา</h1>
 
           </div>
 
@@ -145,21 +145,21 @@
                 <!-- #################################################################### -->
 
                 <div class="card">
-                  <div class="card-header">เพิ่มข้อมูล <a href="/news/show" class="btn btn-info">ย้อนกลับ</a></div>
+                  <div class="card-header">เพิ่มข้อมูล <a href="/about/show" class="btn btn-info">ย้อนกลับ</a></div>
                   <div class="card-body">
-                    <form action="/news/add" method="post" enctype="multipart/form-data">
+                    <form action="/about/add" method="post">
                       <div class="form-group">
                         <label>หัวข้อ</label>
-                        <input type="text" class="form-control" name="Topic" value="<%= Topic %>" autocomplete="off" />
+                        <input type="text" class="form-control" name="topic" value="<%= topic %>" autocomplete="off" />
                       </div>
                       <div class="form-group">
                         <label>รายละเอียด</label>
-                        <input type="text" class="form-control" name="Detail_1" value="<%= Detail_1 %>"
+                        <input type="text" class="form-control" name="detail_1" value="<%= detail_1 %>"
                           autocomplete="off" />
                       </div>
                       <div class="form-group">
-                        <label>รูปภาพ</label>
-                        <input type="file" class="form-control" name="image" value="<%= image %>"
+                        <label>รายละเอียดเพิ่มเติม</label>
+                        <input type="text" class="form-control" name="detail_2" value="<%= detail_2 %>"
                           autocomplete="off" />
                       </div>
                       <% if (messages.error) { %>

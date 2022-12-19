@@ -44,7 +44,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/login">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>ข่าวสาร</span></a>
       </li>
 
       <!-- Divider -->
@@ -54,11 +54,11 @@
       <div class="sidebar-heading">ระบบเพิ่ม/ลบ/แก้ไข</div>
 
       <li class="nav-item">
-        <a class="nav-link" href="/about/show">
+        <a class="nav-link" href="/content/show">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>เกี่ยวกับเรา</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="/news/show">
           <i class="fas fa-fw fa-table"></i>
           <span>ข่าวสาร</span></a>
@@ -68,7 +68,7 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>โครงสร้างการบริหาร</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/content/show">
           <i class="fas fa-fw fa-table"></i>
           <span>สาระน่ารู้</span></a>
@@ -110,11 +110,12 @@
       <!-- Divider -->
 
       <li class="nav-item">
-       <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
           <span>
             ออกจากระบบ
-          </span></a>
+          </span>
+        </a>
       </li>
 
 
@@ -134,32 +135,33 @@
         <div class="container-fluid pt-4">
 
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">ข่าวสาร</h1>
+            <h1 class="h3 mb-0 text-gray-800">สาระน่ารู้</h1>
 
           </div>
 
           <div class="row">
-
             <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4">
                 <!-- #################################################################### -->
 
                 <div class="card">
-                  <div class="card-header">เพิ่มข้อมูล <a href="/news/show" class="btn btn-info">ย้อนกลับ</a></div>
+                  <div class="card-header">
+                    แก้ไขข้อมูล <a href="/content/show" class="btn btn-info">ย้อนกลับ</a>
+                  </div>
                   <div class="card-body">
-                    <form action="/news/add" method="post" enctype="multipart/form-data">
+                    <form action="/content/update/<%= id %>" method="post">
                       <div class="form-group">
-                        <label>หัวข้อ</label>
-                        <input type="text" class="form-control" name="Topic" value="<%= Topic %>" autocomplete="off" />
+                        <label>หัวข้อ:</label>
+                        <input type="text" class="form-control" name="topic" value="<%= topic %>" autocomplete="off" />
                       </div>
                       <div class="form-group">
-                        <label>รายละเอียด</label>
-                        <input type="text" class="form-control" name="Detail_1" value="<%= Detail_1 %>"
+                        <label>รายละเอียด:</label>
+                        <input type="text" class="form-control" name="detail_1" value="<%= detail_1 %>"
                           autocomplete="off" />
                       </div>
                       <div class="form-group">
-                        <label>รูปภาพ</label>
-                        <input type="file" class="form-control" name="image" value="<%= image %>"
+                        <label>รายละเอียดเพิ่มเติม:</label>
+                        <input type="text" class="form-control" name="detail_2" value="<%= detail_2 %>"
                           autocomplete="off" />
                       </div>
                       <% if (messages.error) { %>

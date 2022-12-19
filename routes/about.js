@@ -14,55 +14,60 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/show", ifNotLoggedin, (req, res, next) => {
-  dbCon.query("SELECT * FROM news ORDER BY ID desc", (err, rows) => {
+  dbCon.query("SELECT * FROM abouts ORDER BY id desc", (err, rows) => {
     if (err) {
       req.flash("error", err);
-      res.render("news/show", { data_news: "" });
+      res.render("about/show", { data: "" });
     } else {
-      res.render("news/show", { data_news: rows });
+      res.render("about/show", { data: rows });
     }
   });
 });
 
 // display add book page
 router.get("/add", ifNotLoggedin, (req, res, next) => {
-  res.render("news/add", {
-    Topic: "",
-    Detail_1: "",
+  res.render("about/add", {
+    topic: "",
+    detail_1: "",
+    detail_2: "",
   });
 });
 
 // add a new book
 router.post("/add", (req, res, next) => {
-  let Topic = req.body.Topic;
-  let Detail_1 = req.body.Detail_1;
+  let topic = req.body.topic;
+  let detail_1 = req.body.detail_1;
+  let detail_2 = req.body.detail_2;
   let errors = false;
 
-  if (Topic.length === 0 || Detail_1.length === 0) {
+  if (topic.length === 0 || detail_1.length === 0) {
     errors = true;
     // set flash message
     req.flash("error", "Please enter name and author");
     // render to add.ejs with flash message
-    res.render("news/add", {
-      Topic: Topic,
-      Detail_1: Detail_1,
+    res.render("about/add", {
+      topic: topic,
+      detail_1: detail_1,
+      detail_2: detail_2,
     });
   }
 
   // if no error
   if (!errors) {
     let form_data = {
-      Topic: Topic,
-      Detail_1: Detail_1,
+      topic: topic,
+      detail_1: detail_1,
+      detail_2: detail_2,
     };
 
     // insert query
-    dbCon.query("INSERT INTO news SET ?", form_data, (err, result) => {
+    dbCon.query("INSERT INTO abouts SET ?", form_data, (err, result) => {
       if (err) {
         req.flash("error", err);
-        res.render("news/add", {
-          Topic: form_data.Topic,
-          Detail_1: form_data.Detail_1,
+        res.render("about/add", {
+          topic: form_data.topic,
+          detail_1: form_data.detail_1,
+          detail_2: form_data.detail_2,
         });
       } else {
         req.flash("success", "Book successfully added");
@@ -73,76 +78,84 @@ router.post("/add", (req, res, next) => {
 });
 
 // display edit book page
-router.get('/edit/(:ID)', (req, res, next) => {
-  let ID = req.params.ID;
+router.get("/edit/(:id)", (req, res, next) => {
+  let id = req.params.id;
 
-  dbCon.query('SELECT * FROM news WHERE ID = ' + ID, (err, rows, fields) => {
-      if (rows.length <= 0) {
-          req.flash('error', 'News not found with ID = ' + ID)
-          res.redirect('/show');
-      } else {
-          res.render('news/edit', {
-              title: 'Edit news',
-              ID: rows[0].ID,
-              Topic: rows[0].Topic,
-              Detail_1: rows[0].Detail_1
-          })
-      }
+  dbCon.query("SELECT * FROM abouts WHERE id = " + id, (err, rows, fields) => {
+    if (rows.length <= 0) {
+      req.flash("error", "News not found with id = " + id);
+      res.redirect("/show");
+    } else {
+      res.render("about/edit", {
+        title: "Edit about",
+        id: rows[0].id,
+        topic: rows[0].topic,
+        detail_1: rows[0].detail_1,
+        detail_2: rows[0].detail_2,
+      });
+    }
   });
-})
+});
 
 // update book page
-router.post('/update/:ID', (req, res, next) => {
-  let ID = req.params.ID;
-  let Topic = req.body.Topic;
-  let Detail_1 = req.body.Detail_1;
+router.post("/update/:id", (req, res, next) => {
+  let id = req.params.id;
+  let topic = req.body.topic;
+  let detail_1 = req.body.detail_1;
+  let detail_2 = req.body.detail_2;
   let errors = false;
 
-  if (Topic.length === 0 || Detail_1.length === 0) {
-      errors = true;
-      req.flash('error', 'Please enter Topic and Detail_1');
-      res.render('news/edit', {
-          ID: req.params.ID,
-          Topic: Topic,
-          Detail_1: Detail_1
-      })
+  if (topic.length === 0 || detail_1.length === 0) {
+    errors = true;
+    req.flash("error", "Please enter data");
+    res.render("about/edit", {
+      id: req.params.id,
+      topic: topic,
+      detail_1: detail_1,
+      detail_2: detail_2,
+    });
   }
   // if no error
   if (!errors) {
-      let form_data = {
-          Topic: Topic,
-          Detail_1: Detail_1
+    let form_data = {
+      topic: topic,
+      detail_1: detail_1,
+      detail_2: detail_2,
+    };
+    // update query
+    dbCon.query(
+      "UPDATE abouts SET ? WHERE id = " + id,
+      form_data,
+      (err, result) => {
+        if (err) {
+          req.flash("error", err);
+          res.render("about/edit", {
+            id: req.params.id,
+            topic: form_data.topic,
+            detail_1: form_data.detail_1,
+            detail_2: form_data.detail_2,
+          });
+        } else {
+          req.flash("success", "Book successfully updated");
+          res.redirect("/about/show");
+        }
       }
-      // update query
-      dbCon.query("UPDATE news SET ? WHERE ID = " + ID, form_data, (err, result) => {
-          if (err) {
-              req.flash('error', err);
-              res.render('news/edit', {
-                  ID: req.params.ID,
-                  Topic: form_data.Topic,
-                  Detail_1: form_data.Detail_1
-              })
-          } else {
-              req.flash('success', 'Book successfully updated');
-              res.redirect('/news/show')
-          }
-      })
+    );
   }
-})
+});
 
 // delete book
-router.get('/delete/(:ID)', (req, res, next) => {
-  let id = req.params.ID;
+router.get("/delete/(:id)", (req, res, next) => {
+  let id = req.params.id;
 
-  dbCon.query('DELETE FROM news WHERE ID = ' + id, (err, result) => {
-      if (err) {
-          req.flash('error', err),
-          res.redirect('/news/show');
-      } else {
-          req.flash('success', 'News successfully deleted! ID = ' + id);
-          res.redirect('/news/show');
-      }
-  })
-})
+  dbCon.query("DELETE FROM abouts WHERE id = " + id, (err, result) => {
+    if (err) {
+      req.flash("error", err), res.redirect("/about/show");
+    } else {
+      req.flash("success", "News successfully deleted! id = " + id);
+      res.redirect("/about/show");
+    }
+  });
+});
 
 module.exports = router;

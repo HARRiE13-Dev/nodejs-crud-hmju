@@ -44,7 +44,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/login">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>ข่าวสาร</span></a>
       </li>
 
       <!-- Divider -->
@@ -58,7 +58,7 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>เกี่ยวกับเรา</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="/news/show">
           <i class="fas fa-fw fa-table"></i>
           <span>ข่าวสาร</span></a>
@@ -96,7 +96,7 @@
           <i class="fas fa-fw fa-table"></i>
           <span>สินค้า</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/order/show">
           <i class="fas fa-fw fa-table"></i>
           <span>การสั่งซื้อ</span></a>
@@ -110,7 +110,7 @@
       <!-- Divider -->
 
       <li class="nav-item">
-       <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
           <span>
             ออกจากระบบ
@@ -134,32 +134,68 @@
         <div class="container-fluid pt-4">
 
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">ข่าวสาร</h1>
+            <h1 class="h3 mb-0 text-gray-800">การสั่งซื้อสินค้า</h1>
 
           </div>
 
           <div class="row">
-
             <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4">
                 <!-- #################################################################### -->
 
                 <div class="card">
-                  <div class="card-header">เพิ่มข้อมูล <a href="/news/show" class="btn btn-info">ย้อนกลับ</a></div>
+                  <div class="card-header">
+                    แก้ไขข้อมูล <a href="/order/show" class="btn btn-info">ย้อนกลับ</a>
+                  </div>
                   <div class="card-body">
-                    <form action="/news/add" method="post" enctype="multipart/form-data">
+                    <form action="/order/update/<%= id %>" method="post">
                       <div class="form-group">
-                        <label>หัวข้อ</label>
-                        <input type="text" class="form-control" name="Topic" value="<%= Topic %>" autocomplete="off" />
-                      </div>
-                      <div class="form-group">
-                        <label>รายละเอียด</label>
-                        <input type="text" class="form-control" name="Detail_1" value="<%= Detail_1 %>"
+                        <label>สินค้า</label>
+                        <input type="text" class="form-control" name="product" value="<%= product	%>"
                           autocomplete="off" />
                       </div>
                       <div class="form-group">
-                        <label>รูปภาพ</label>
-                        <input type="file" class="form-control" name="image" value="<%= image %>"
+                        <label>จำนวน</label>
+                        <input type="number" class="form-control" name="quantity" value="<%= quantity %>"
+                          autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>ราคาต่อหน่วย</label>
+                        <input type="number" class="form-control" name="price" value="<%= price %>"
+                          autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>ยอดรวม</label>
+                        <input type="number" class="form-control" name="total" value="<%= total %>" autocomplete="off"
+                          readonly />
+                      </div>
+                      <div class="form-group">
+                        <label>ชื่อ (ผู้สั่งซื้อ)</label>
+                        <input type="text" class="form-control" name="firstname" value="<%= firstname %>"
+                          autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>นามสกุล (ผู้สั่งซื้อ)</label>
+                        <input type="text" class="form-control" name="lastname" value="<%= lastname %>"
+                          autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>ที่อยู่</label>
+                        <input type="text" class="form-control" name="address" value="<%= address %>"
+                          autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>โทรศัพท์</label>
+                        <input type="tel" class="form-control" name="tel" value="<%= tel %>" autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>สถานะ</label>
+                        <input type="text" class="form-control" name="order_status" value="<%= order_status %>"
+                          autocomplete="off" />
+                      </div>
+                      <div class="form-group">
+                        <label>เลขติดตามพัสดุ</label>
+                        <input type="text" class="form-control" name="track_id" value="<%= track_id %>"
                           autocomplete="off" />
                       </div>
                       <% if (messages.error) { %>

@@ -21,6 +21,7 @@ const shopRouter = require("./routes/shop");
 const contactRouter = require("./routes/contact");
 const calendarRouter = require("./routes/calendar");
 const newsRouter = require("./routes/news");
+const orderRouter = require("./routes/order");
 var adminRouter = require("./routes/admin");
 
 const app = express();
@@ -49,14 +50,13 @@ app.use(flash());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/news", newsRouter);
-app.use("/news/show", newsRouter);
-
 app.use("/about", aboutRouter);
 app.use("/content", contentRouter);
 app.use("/organize", organizeRouter);
 app.use("/shop", shopRouter);
 app.use("/contact", contactRouter);
 app.use("/calendar", calendarRouter);
+app.use("/order", orderRouter);
 
 app.use(express.static("img"));
 app.use(express.static("css"));
@@ -189,7 +189,6 @@ app.post(
               if (compare_result === true) {
                 req.session.isLoggedIn = true;
                 req.session.userID = rows[0].id;
-
                 res.redirect("/login");
               } else {
                 res.render("login-register", {
