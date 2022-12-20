@@ -13,9 +13,9 @@ router.get("/", function (req, res, next) {
   dbCon.query("SELECT * FROM staffs ORDER BY id desc", (err, rows) => {
     if (err) {
       req.flash("error", err);
-      res.render("organize", { data_staffs: "" });
+      res.render("organize", { data: "" });
     } else {
-      res.render("organize", { data_staffs: rows });
+      res.render("organize", { data: rows });
     }
   });
 });

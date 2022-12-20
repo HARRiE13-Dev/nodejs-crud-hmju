@@ -11,16 +11,41 @@ const ifNotLoggedin = (req, res, next) => {
 };
 
 router.get("/", function (req, res, next) {
-  res.render("shop", {
-    title: "Express",
-
-    product: "",
-    quantity: 0,
-    firstname: "",
-    lastname: "",
-    tel: "",
-    address: "",
+  dbCon.query("SELECT * FROM shops ORDER BY id desc", (err, rows) => {
+    if (err) {
+      req.flash("error", err);
+      res.render("shop", {
+        product: "",
+        quantity: 0,
+        firstname: "",
+        lastname: "",
+        tel: "",
+        address: "",
+        name: "",
+      });
+    } else {
+      res.render("shop", {
+        data: rows,
+        product: "",
+        quantity: 0,
+        firstname: "",
+        lastname: "",
+        tel: "",
+        address: "",
+        
+      });
+    }
   });
+  // res.render("shop", {
+  //   title: "Express",
+
+  //   product: "",
+  //   quantity: 0,
+  //   firstname: "",
+  //   lastname: "",
+  //   tel: "",
+  //   address: "",
+  // });
 });
 
 router.get("/show", ifNotLoggedin, (req, res, next) => {
@@ -175,48 +200,59 @@ router.post("/", (req, res, next) => {
   let lastname = req.body.lastname;
   let tel = req.body.tel;
   let address = req.body.address;
+
   let errors = false;
 
-  // if (Topic.length === 0 || Detail_1.length === 0) {
-  //   errors = true;
-  //   // set flash message
-  //   req.flash("error", "Please enter name and author");
-  //   // render to add.ejs with flash message
-  //   res.render("news/add", {
-  //     Topic: Topic,
-  //     Detail_1: Detail_1,
-  //   });
-  // }
+  if (
+    firstname.length === 0 ||
+    lastname.length === 0 ||
+    tel.length === 0 ||
+    address.length === 0
+  ) {
+    errors = true;
+    // set flash message
+    req.flash("error", "Please enter name and info");
+    // render to add.ejs with flash message
+    res.render("shop", {
+      product: product,
+      quantity: quantity,
+      firstname: firstname,
+      lastname: lastname,
+      tel: tel,
+      address: address,
+    });
+  }
 
   // // if no error
-  // if (!errors) {
-  let form_data = {
-    product: product,
-    quantity: quantity,
-    firstname: firstname,
-    lastname: lastname,
-    tel: tel,
-    address: address,
-  };
+  if (!errors) {
+    let form_data = {
+      product: product,
+      quantity: quantity,
+      firstname: firstname,
+      lastname: lastname,
+      tel: tel,
+      address: address,
+    };
 
-  // insert query
-  dbCon.query("INSERT INTO orders SET ?", form_data, (err, result) => {
-    if (err) {
-      req.flash("error", err);
-      res.render("shop", {
-        product: form_data.product,
-        quantity: form_data.quantity,
-        firstname: form_data.firstname,
-        lastname: form_data.lastname,
-        tel: form_data.tel,
-        address: form_data.address,
-      });
-    } else {
-      req.flash("success", "Book successfully added");
-      res.redirect("/");
-    }
-  });
-  // }
+    // insert query
+    dbCon.query("INSERT INTO orders SET ?", form_data, (err, result) => {
+      if (err) {
+        req.flash("error", err);
+        res.redirect("shop");
+        res.render("shop", {
+          product: form_data.product,
+          quantity: form_data.quantity,
+          firstname: form_data.firstname,
+          lastname: form_data.lastname,
+          tel: form_data.tel,
+          address: form_data.address,
+        });
+      } else {
+        req.flash("success", "บันทึกข้อมูลสำเร็จ");
+        res.redirect("order");
+      }
+    });
+  }
 });
 
 module.exports = router;

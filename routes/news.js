@@ -1,9 +1,9 @@
 let express = require("express");
 let router = express.Router();
 let dbCon = require("../lib/Database.js");
-const multer = require("multer");
+// const multer = require("multer");
 const fs = require("fs");
-const path = require("path");
+// const path = require("path");
 // const upload = multer({ dest: "uploads/" });
 
 const ifNotLoggedin = (req, res, next) => {
@@ -40,28 +40,19 @@ router.get("/add", ifNotLoggedin, (req, res, next) => {
   res.render("news/add", {
     Topic: "",
     Detail_1: "",
-    image: null,
+    Picture: "",
   });
 });
 
-var storage = multer.diskStorage({
-  destination: (req, files,cb) => {
-    cb(null, "Images");
-  },
-  filename: (req, files, cb) => {
-    console.log(file);
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-const upload = multer({ storage: storage });
-
 // add a new book
-router.post("/add", upload.single("image"), (req, res, next) => {
+router.post("/add", (req, res, next) => {
   let Topic = req.body.Topic;
   let Detail_1 = req.body.Detail_1;
-  let file = req.body.image;
-  let imageData = fs.readFileSync(file.path);
-  let imageType = file.mimetype;
+  let data = fs.promises.readFile(req.body.Picture);
+  // encode the buffer as base64
+  let base64Data = data.toString("base64");
+  let Picture = base64Data;
+
   let errors = false;
 
   if (Topic.length === 0 || Detail_1.length === 0) {
@@ -72,6 +63,7 @@ router.post("/add", upload.single("image"), (req, res, next) => {
     res.render("news/add", {
       Topic: Topic,
       Detail_1: Detail_1,
+      Picture: Picture,
     });
   }
 
@@ -80,7 +72,7 @@ router.post("/add", upload.single("image"), (req, res, next) => {
     let form_data = {
       Topic: Topic,
       Detail_1: Detail_1,
-      file: [file.originalname, imageData],
+      Picture: Picture,
     };
 
     // insert query
@@ -90,7 +82,7 @@ router.post("/add", upload.single("image"), (req, res, next) => {
         res.render("news/add", {
           Topic: form_data.Topic,
           Detail_1: form_data.Detail_1,
-          Picture: form_data.file,
+          Picture: form_data.Picture,
         });
       } else {
         req.flash("success", "Successfully added");

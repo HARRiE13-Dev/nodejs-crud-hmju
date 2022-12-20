@@ -10,7 +10,14 @@ const ifNotLoggedin = (req, res, next) => {
 };
 // Display Data page
 router.get("/", function (req, res, next) {
-  res.render("calendar", { title: "Express" });
+  dbCon.query("SELECT * FROM calendars ORDER BY id desc", (err, rows) => {
+    if (err) {
+      req.flash("error", err);
+      res.render("calendar", { data: "" });
+    } else {
+      res.render("calendar", { data: rows });
+    }
+  });
 });
 
 router.get("/show", ifNotLoggedin, (req, res, next) => {

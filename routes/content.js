@@ -3,7 +3,14 @@ var router = express.Router();
 let dbCon = require("../lib/Database.js");
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("content", { title: "Express" });
+  dbCon.query("SELECT * FROM contents ORDER BY id desc", (err, rows) => {
+    if (err) {
+      req.flash("error", err);
+      res.render("content", { data: "" });
+    } else {
+      res.render("content", { data: rows });
+    }
+  });
 });
 
 const ifNotLoggedin = (req, res, next) => {

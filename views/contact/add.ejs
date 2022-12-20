@@ -54,11 +54,11 @@
       <div class="sidebar-heading">ระบบเพิ่ม/ลบ/แก้ไข</div>
 
       <li class="nav-item">
-        <a class="nav-link" href="/about/show">
+        <a class="nav-link" href="/content/show">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>เกี่ยวกับเรา</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="/news/show">
           <i class="fas fa-fw fa-table"></i>
           <span>ข่าวสาร</span></a>
@@ -68,7 +68,7 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>โครงสร้างการบริหาร</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/content/show">
           <i class="fas fa-fw fa-table"></i>
           <span>สาระน่ารู้</span></a>
@@ -134,7 +134,7 @@
         <div class="container-fluid pt-4">
 
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">ข่าวสาร</h1>
+            <h1 class="h3 mb-0 text-gray-800">สาระน่ารู้</h1>
 
           </div>
 
@@ -145,29 +145,27 @@
                 <!-- #################################################################### -->
 
                 <div class="card">
-                  <div class="card-header">เพิ่มข้อมูล <a href="/news/show" class="btn btn-info">ย้อนกลับ</a></div>
+                  <div class="card-header">เพิ่มข้อมูล <a href="/content/show" class="btn btn-info">ย้อนกลับ</a></div>
                   <div class="card-body">
-                    <form action="/news/add" method="post">
+                    <form action="/content/add" method="post">
                       <div class="form-group">
                         <label>หัวข้อ</label>
-                        <input type="text" class="form-control" name="Topic" value="<%= Topic %>" autocomplete="off" />
+                        <input type="text" class="form-control" name="topic" value="<%= topic %>" autocomplete="off" />
                       </div>
                       <div class="form-group">
                         <label>รายละเอียด</label>
-                        <input type="text" class="form-control" name="Detail_1" value="<%= Detail_1 %>"
+                        <input type="text" class="form-control" name="detail_1" value="<%= detail_1 %>"
                           autocomplete="off" />
                       </div>
                       <div class="form-group">
-                        <label>รูปภาพ</label>
-                        <input name="Picture" value="<%= Picture %>" class="form-control" id="inputFileToLoad"
-                          type="file" onchange="encodeImageFileAsURL();" />
+                        <label>รายละเอียดเพิ่มเติม</label>
+                        <input type="text" class="form-control" name="detail_2" value="<%= detail_2 %>"
+                          autocomplete="off" />
                       </div>
-                      <div id="imgTest" class="text-center"></div>
-
                       <% if (messages.error) { %>
                       <div class="alert alert-danger" role="alert"><%= messages.error %></div>
                       <% } %>
-                      <div class="form-group text-center mt-4">
+                      <div class="form-group text-center">
                         <input type="submit" class="btn btn-info" value="ยืนยัน" />
                       </div>
                     </form>
@@ -229,30 +227,6 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script type='text/javascript'>
-    function encodeImageFileAsURL() {
-
-      var filesSelected = document.getElementById("inputFileToLoad").files;
-      if (filesSelected.length > 0) {
-        var fileToLoad = filesSelected[0];
-
-        var fileReader = new FileReader();
-
-        fileReader.onload = function (fileLoadedEvent) {
-          var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-          var newImage = document.createElement('img');
-          //newImage.setAttribute('height', 'auto'); 
-          newImage.setAttribute('width', '800px');
-          newImage.src = srcData;
-
-          document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-          console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
-        }
-        fileReader.readAsDataURL(fileToLoad);
-      }
-    }
-  </script>
   <script src="/jquery/jquery.min.js"></script>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 
