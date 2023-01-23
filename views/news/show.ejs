@@ -110,7 +110,7 @@
       <!-- Divider -->
 
       <li class="nav-item">
-       <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
           <span>
             ออกจากระบบ
@@ -145,7 +145,7 @@
                 <!-- #################################################################### -->
                 <div class="card">
                   <div class="card-header">
-                   ตารางข้อมูล
+                    ตารางข้อมูล
                     <a href="/news/add" class="btn btn-info">เพิ่มข้อมูล</a>
                   </div>
                   <div class="card-body">
@@ -174,8 +174,8 @@
                             <%= data_news[i].Detail_1 %> <br />
                             <%= data_news[i].Detail_2 %>
                           </td>
-                          <td>
-                            <%= data_news[i].Picture %>
+                          <td class="text-center">
+                            <img src="<%= data_news[i].Picture %>" alt="" style="height: 200px ; max-width : 300px; object-fit: cover;">
                           </td>
                           <td>
                             <a href="../news/edit/<%= data_news[i].ID %>" class="btn btn-success edit">Edit</a>

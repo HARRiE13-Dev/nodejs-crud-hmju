@@ -22,6 +22,7 @@ router.get("/", function (req, res, next) {
         tel: "",
         address: "",
         name: "",
+        total:0
       });
     } else {
       res.render("shop", {
@@ -32,7 +33,7 @@ router.get("/", function (req, res, next) {
         lastname: "",
         tel: "",
         address: "",
-        
+        total:0
       });
     }
   });
@@ -200,6 +201,7 @@ router.post("/", (req, res, next) => {
   let lastname = req.body.lastname;
   let tel = req.body.tel;
   let address = req.body.address;
+  let total = req.body.total;
 
   let errors = false;
 
@@ -220,6 +222,7 @@ router.post("/", (req, res, next) => {
       lastname: lastname,
       tel: tel,
       address: address,
+      total: total,
     });
   }
 
@@ -232,6 +235,7 @@ router.post("/", (req, res, next) => {
       lastname: lastname,
       tel: tel,
       address: address,
+      total: total,
     };
 
     // insert query
@@ -246,6 +250,7 @@ router.post("/", (req, res, next) => {
           lastname: form_data.lastname,
           tel: form_data.tel,
           address: form_data.address,
+          total: form_data.total,
         });
       } else {
         req.flash("success", "บันทึกข้อมูลสำเร็จ");

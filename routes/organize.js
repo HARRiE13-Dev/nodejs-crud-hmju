@@ -38,6 +38,7 @@ router.get("/add", ifNotLoggedin, (req, res, next) => {
     lastname: "",
     position: "",
     info: "",
+    image: "",
   });
 });
 
@@ -47,6 +48,7 @@ router.post("/add", (req, res, next) => {
   let lastname = req.body.lastname;
   let position = req.body.position;
   let info = req.body.info;
+  let image = req.body.image;
   let errors = false;
 
   if (
@@ -63,6 +65,7 @@ router.post("/add", (req, res, next) => {
       lastname: lastname,
       position: position,
       info: info,
+      image: image,
     });
   }
 
@@ -73,6 +76,7 @@ router.post("/add", (req, res, next) => {
       lastname: lastname,
       position: position,
       info: info,
+      image: image,
     };
 
     // insert query
@@ -80,8 +84,11 @@ router.post("/add", (req, res, next) => {
       if (err) {
         req.flash("error", err);
         res.render("organize/add", {
-          Topic: form_data.Topic,
-          Detail_1: form_data.Detail_1,
+          firstname: form_data.firstname,
+          lastname: form_data.lastname,
+          position: form_data.position,
+          info: form_data.info,
+          image: form_data.image,
         });
       } else {
         req.flash("success", "Successfully added");
@@ -106,6 +113,7 @@ router.get("/edit/(:id)", (req, res, next) => {
         lastname: rows[0].lastname,
         position: rows[0].position,
         info: rows[0].info,
+        image: rows[0].image,
       });
     }
   });
@@ -118,6 +126,7 @@ router.post("/update/:id", (req, res, next) => {
   let lastname = req.body.lastname;
   let position = req.body.position;
   let info = req.body.info;
+  let image = req.body.image;
   let errors = false;
 
   if (
@@ -133,6 +142,7 @@ router.post("/update/:id", (req, res, next) => {
       firstname: firstname,
       position: position,
       info: info,
+      image: image,
     });
   }
   // if no error
@@ -156,6 +166,7 @@ router.post("/update/:id", (req, res, next) => {
             lastname: req.body.lastname,
             position: req.body.position,
             info: req.body.info,
+            image: image,
           });
         } else {
           req.flash("success", "Successfully updated");

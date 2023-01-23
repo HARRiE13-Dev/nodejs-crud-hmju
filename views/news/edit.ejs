@@ -110,7 +110,7 @@
       <!-- Divider -->
 
       <li class="nav-item">
-       <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
           <span>
             ออกจากระบบ
@@ -142,10 +142,10 @@
             <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4">
                 <!-- #################################################################### -->
-   
+
                 <div class="card">
                   <div class="card-header">
-                    แก้ไขข้อมูล   <a href="/news/show" class="btn btn-info">ย้อนกลับ</a>
+                    แก้ไขข้อมูล <a href="/news/show" class="btn btn-info">ย้อนกลับ</a>
                   </div>
                   <div class="card-body">
                     <form action="/news/update/<%= ID %>" method="post">
@@ -158,9 +158,27 @@
                         <input type="text" class="form-control" name="Detail_1" value="<%= Detail_1 %>"
                           autocomplete="off" />
                       </div>
+                      <div class="form-group">
+                        <label>รูปภาพ</label>
+                        <input class="form-control" id="inputFileToLoad" type="file"
+                          onchange="encodeImageFileAsURL();" />
+                      </div>
+                      <div class="row text-center content mt-4">
+                        <div class="col-sm">
+                          <img src="<%= Picture %>" alt=""
+                            style="height: 300px ; max-width : 400px; object-fit: cover;">
+                        </div>
+                        <div class="col-sm pt-5">
+                          <h2>-></h2>
+                        </div>
+                        <div class="col-sm">
+                          <div id="imgTest" class="text-center"></div>
+                        </div>
+                      </div>
+                      <textarea class="invisible" name="Picture" value="<%= Picture %>" id="base64" rows="5"></textarea>
                       <% if (messages.error) { %>
-                        <div class="alert alert-danger" role="alert"><%= messages.error %></div>
-                        <% } %>
+                      <div class="alert alert-danger" role="alert"><%= messages.error %></div>
+                      <% } %>
                       <div class="form-group text-center">
                         <input type="submit" class="btn btn-info" value="ยืนยัน" />
                       </div>
@@ -223,6 +241,30 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
+  <script type='text/javascript'>
+    function encodeImageFileAsURL() {
+
+      var filesSelected = document.getElementById("inputFileToLoad").files;
+      if (filesSelected.length > 0) {
+        var fileToLoad = filesSelected[0];
+
+        var fileReader = new FileReader();
+
+        fileReader.onload = function (fileLoadedEvent) {
+          var srcData = fileLoadedEvent.target.result; // <--- data: base64
+          var newImage = document.createElement('img');
+          //newImage.setAttribute('height', 'auto'); 
+          //object - fit: cover;
+          newImage.setAttribute('width', '300px', 'max-width', '400px', 'object-fit', ' cover');
+          newImage.src = srcData;
+          document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+          document.getElementById('base64').value = srcData
+          //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+        }
+        fileReader.readAsDataURL(fileToLoad);
+      }
+    }
+  </script>
   <script src="/jquery/jquery.min.js"></script>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 

@@ -110,7 +110,7 @@
       <!-- Divider -->
 
       <li class="nav-item">
-       <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
           <span>
             ออกจากระบบ
@@ -167,6 +167,13 @@
                         <label>เพิ่มเติม</label>
                         <input type="text" class="form-control" name="info" value="<%= info %>" autocomplete="off" />
                       </div>
+                      <div class="form-group">
+                        <label>รูปภาพ</label>
+                        <input class="form-control" id="inputFileToLoad" type="file"
+                          onchange="encodeImageFileAsURL();" />
+                      </div>
+                      <div id="imgTest" class="text-center"></div>
+                      <textarea class="invisible" name="image" value="<%= image %>" id="base64" rows="5"></textarea>
                       <% if (messages.error) { %>
                       <div class="alert alert-danger" role="alert"><%= messages.error %></div>
                       <% } %>
@@ -232,6 +239,30 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
+  <script type='text/javascript'>
+    function encodeImageFileAsURL() {
+
+      var filesSelected = document.getElementById("inputFileToLoad").files;
+      if (filesSelected.length > 0) {
+        var fileToLoad = filesSelected[0];
+
+        var fileReader = new FileReader();
+
+        fileReader.onload = function (fileLoadedEvent) {
+          var srcData = fileLoadedEvent.target.result; // <--- data: base64
+          var newImage = document.createElement('img');
+          //newImage.setAttribute('height', 'auto'); 
+          //object - fit: cover;
+          newImage.setAttribute('width', '300px', 'max-width', '400px', 'object-fit', ' cover');
+          newImage.src = srcData;
+          document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+          document.getElementById('base64').value = srcData
+          //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+        }
+        fileReader.readAsDataURL(fileToLoad);
+      }
+    }
+  </script>
   <script src="/jquery/jquery.min.js"></script>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 

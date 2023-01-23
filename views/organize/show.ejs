@@ -161,6 +161,7 @@
                           <th scope="col">นามสกุล</th>
                           <th scope="col">ตำแหน่ง</th>
                           <th scope="col">เพิ่มเติม</th>
+                          <th scope="col">รูปภาพ</th>
 
                           <th width="col">แก้ไข / ลบ</th>
                         </tr>
@@ -174,6 +175,10 @@
                           <td><%= data_staffs[i].lastname %></td>
                           <td><%= data_staffs[i].position %></td>
                           <td><%= data_staffs[i].info %></td>
+                          <td class="text-center">
+                            <img src="<%= data_staffs[i].image %>" alt=""
+                              style="height: 200px ; max-width : 300px; object-fit: cover;">
+                          </td>
                           <td>
                             <a href="../organize/edit/<%= data_staffs[i].id %>" class="btn btn-success edit">Edit</a>
                             <a href="../organize/delete/<%= data_staffs[i].id %>"

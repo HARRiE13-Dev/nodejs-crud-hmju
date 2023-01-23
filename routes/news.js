@@ -48,10 +48,11 @@ router.get("/add", ifNotLoggedin, (req, res, next) => {
 router.post("/add", (req, res, next) => {
   let Topic = req.body.Topic;
   let Detail_1 = req.body.Detail_1;
-  let data = fs.promises.readFile(req.body.Picture);
-  // encode the buffer as base64
-  let base64Data = data.toString("base64");
-  let Picture = base64Data;
+  let Picture = req.body.Picture;
+  // let data = fs.promises.readFile(req.body.Picture);
+  // // encode the buffer as base64
+  // let base64Data = data.toString("base64");
+  // let Picture = base64Data.outerHTML;
 
   let errors = false;
 
@@ -106,6 +107,28 @@ router.get("/edit/(:ID)", (req, res, next) => {
         ID: rows[0].ID,
         Topic: rows[0].Topic,
         Detail_1: rows[0].Detail_1,
+        Picture: rows[0].Picture,
+      });
+    }
+  });
+});
+
+router.get("/explain/(:ID)", (req, res, next) => {
+  let ID = req.params.ID;
+
+  dbCon.query("SELECT * FROM news WHERE ID = " + ID, (err, rows, fields) => {
+    if (rows.length <= 0) {
+      req.flash("error", "Not found with ID = " + ID);
+      res.redirect("/show");
+    } else {
+      res.render("news/explain", {
+        title: "Explain news",
+        ID: rows[0].ID,
+        Topic: rows[0].Topic,
+        Detail_1: rows[0].Detail_1,
+        Detail_2: rows[0].Detail_2,
+        Picture: rows[0].Picture,
+        Update_time: rows[0].Update_time,
       });
     }
   });
@@ -116,6 +139,8 @@ router.post("/update/:ID", (req, res, next) => {
   let ID = req.params.ID;
   let Topic = req.body.Topic;
   let Detail_1 = req.body.Detail_1;
+  let Detail_2 = req.body.Detail_2;
+  let Picture = req.body.Picture;
   let errors = false;
 
   if (Topic.length === 0 || Detail_1.length === 0) {
@@ -125,6 +150,8 @@ router.post("/update/:ID", (req, res, next) => {
       ID: req.params.ID,
       Topic: Topic,
       Detail_1: Detail_1,
+      Detail_2: Detail_2,
+      Picture: Picture,
     });
   }
   // if no error
@@ -132,6 +159,8 @@ router.post("/update/:ID", (req, res, next) => {
     let form_data = {
       Topic: Topic,
       Detail_1: Detail_1,
+      Detail_2: Detail_2,
+      Picture: Picture,
     };
     // update query
     dbCon.query(
@@ -144,6 +173,8 @@ router.post("/update/:ID", (req, res, next) => {
             ID: req.params.ID,
             Topic: form_data.Topic,
             Detail_1: form_data.Detail_1,
+            Detail_2: form_data.Detail_2,
+            Picture: form_data.Picture,
           });
         } else {
           req.flash("success", "Book successfully updated");

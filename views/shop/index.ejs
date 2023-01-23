@@ -218,23 +218,51 @@
                     กรอกชื่อสินค้า
                   </h6>
 
-                  <select name="product" class="form-select pb-4" value="<%= product %>" id="product">
+                  <select name="product" class="form-select pb-4" value="<%= product %>" id="product"
+                    onchange="cal_total()">
                     <% for(let i = 0; i < data.length; i++) { %>
-                    <option value="c">
-                      <%= data[i].name %>
+                    <option value="<%= data[i].name %>_<%= data[i].price %>">
+                      <%= data[i].name %> (ราคา:<%= data[i].price %>)
                     </option>
                     <% } %>
                   </select>
                 </div>
                 <div class="col-2">
-
                   <h6>
                     จำนวน
                   </h6>
                   <div class="input-group mb-3 ">
-                    <select name="quantity" class="form-select pb-4" value="<%= quantity %>" id="quantity">
+                    <select name="quantity" class="form-select pb-4" value="<%= quantity %>" id="quantity"
+                      onchange="cal_total()">
                     </select>
                   </div>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-12">
+                  <h6>
+                    ราคาสุทธิ
+                  </h6>
+                  <input type="text" name="total" value="<%= total %>" id="total"
+                    class="form-control bg-light border-0 px-4" placeholder="Firstname" style="height: 55px;" readonly>
+
+                </div>
+              </div>
+              <div class="row g-3 mt-2">
+                <div class="col-12">
+                  <h6>
+                    ช่องทางการชำระเงิน
+                  </h6>
+              <h6 class="text-black"> - ธนาคารxxx : xxx-xxx-xx-x </h6>
+                </div>
+              </div>
+              <div class="row g-3 mt-2">
+                <div class="col-12">
+                  <h6>
+                    หลักฐานการชำระเงิน
+                  </h6>
+                  <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+                  <div id="imgTest"></div>
                 </div>
               </div>
               <hr class="my-4">
@@ -270,11 +298,6 @@
                   <textarea name="address" value="<%= address %>" id="address"
                     class="form-control bg-light border-0 px-4 py-3" rows="2" placeholder="Address"></textarea>
                 </div>
-
-
-                <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
-                <div id="imgTest"></div>
-
               </div>
               <div class="text-center mt-4">
                 <button onclick="myFunction()" type="submit" class="btn btn-secondary ">ยืนยัน</button>
@@ -384,23 +407,31 @@
   <a href="#" class="btn btn-secondary py-3 fs-4 back-to-top"><i class="bi bi-arrow-up"></i></a>
 
   <!-- JavaScript Libraries -->
+  <script>
+    function cal_total() {
+      let quantity_ = document.getElementById("quantity").value;
+      let product_ = document.getElementById("product").value;
+      total = Number(quantity_) * Number(product_.split('_')[1])
+      document.getElementById("total").value = total;
+
+    }
+  </script>
   <script type='text/javascript'>
     function encodeImageFileAsURL() {
-  
+
       var filesSelected = document.getElementById("inputFileToLoad").files;
       if (filesSelected.length > 0) {
         var fileToLoad = filesSelected[0];
-  
+
         var fileReader = new FileReader();
-  
-        fileReader.onload = function(fileLoadedEvent) {
+
+        fileReader.onload = function (fileLoadedEvent) {
           var srcData = fileLoadedEvent.target.result; // <--- data: base64
-  
+
           var newImage = document.createElement('img');
           newImage.src = srcData;
-  
+
           document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-          <!-- alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML); -->
           console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
         }
         fileReader.readAsDataURL(fileToLoad);
@@ -410,8 +441,8 @@
   <script>
     function quantity(amount) {
       var select = document.getElementById('quantity');
-      for (var i = 0; i < amount; i++) {
-        select.options[select.options.length] = new Option(i + 1, i);
+      for (var i = 1; i < amount; i++) {
+        select.options[select.options.length] = new Option(i, i);
       }
     }
     quantity(20);

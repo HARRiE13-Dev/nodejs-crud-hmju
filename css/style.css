@@ -311,3 +311,9 @@
   background-color: #f6fff2;
   overflow: scroll;
 }
+.content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
